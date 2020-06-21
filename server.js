@@ -7,7 +7,10 @@ const session = require('express-session')
 const moment = require('moment')
 
 // Sockets.io
-const io = require('socket.io')(3000)
+const socketio = require('socket.io')
+const http = require('http')
+const server = http.createServer(app)
+const io = socketio(server)
 
 // Cookies and Session Handling
 const cookie_parser = require('cookie-parser')
@@ -143,6 +146,6 @@ io.on('connection', socket => {
     })
 })
 
-app.listen(process.env.PORT || 5000)
+server.listen(process.env.PORT || 5000)
 
-module.exports = { app, io }
+module.exports = { app, server, io }

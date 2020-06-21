@@ -1,4 +1,5 @@
-const socket = io('http://localhost:3000')
+const socket = io()
+//const {io} = require('../../server')
 const messageForm = document.getElementById('send-form')
 const messageInput = document.getElementById('btn-input')
 const messageCallout = document.getElementById('message-container')
@@ -7,7 +8,31 @@ const status = document.getElementById('status').innerText
 const sender_email = document.getElementById('sender_email').innerText
 const recipient_email = document.getElementById('recipient_email').innerText
 
+console.log('here at 11')
+
 socket.emit('user-connected', {'room': document.getElementById('chat_id').innerText})
+
+$(document).ready(function () {
+    console.log('here at 13')
+    var chatbox = document.getElementById('chatbox')
+    chatbox.scrollTop = chatbox.scrollHeight
+
+    $('#btn-input').keypress((e) => {
+        //const socket = io('https://litechat-im.herokuapp.com:3000')
+        socket.emit('typing', { 'true': true })
+    })
+
+})
+
+$(window).focus(function () {
+    //const socket = io('https://litechat-im.herokuapp.com:3000')
+    socket.emit('in-tab', { 'room': document.getElementById('chat_id').innerText })
+})
+
+$(window).blur(function () {
+    //const socket = io('https://litechat-im.herokuapp.com:3000')
+    socket.emit('out-of-tab', { 'room': document.getElementById('chat_id').innerText })
+})
 
 socket.on('recipient-is-in', () => {
     status = "Active"
