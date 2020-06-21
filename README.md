@@ -6,6 +6,7 @@ The web-app has been made using the following technologies:
   - <b>Frontend</b> : HTML, CSS, JavaScript and JQuery
   - <b>Database</b> : MongoDB
   
+  
 The application includes the following features :
   1. User registration and login through e-mail and through Google OAuth2 Authentication
   2. Dedicated chat-rooms for each peer-to-peer chat
@@ -13,6 +14,7 @@ The application includes the following features :
   4. Ability to start a chat with a new user by entering just the email of the recipient
   5. Active status of the recipient
   6. All active chats appear in an easy-to-use side-menu
+  
   
  The following features are aimed to be added in the future in decreasing order of priority:
   - End-to-End Encryption of chats by using assymetric key cryptography and de-serialization of chats from the database (for memory optimization)
