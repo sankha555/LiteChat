@@ -2,9 +2,9 @@
 An Instant Messenger for Web Applications - for those who spend more time on their laptops than their phones!
 
 The web-app has been made using the following technologies:
-  - ##Backend : Node.JS and Express
-  - ##Frontend : HTML, CSS, JavaScript and JQuery
-  - ##Database : MongoDB
+  - <b>Backend</b> : Node.JS and Express
+  - Frontend : HTML, CSS, JavaScript and JQuery
+  - Database : MongoDB
   
 The application includes the following features :
   1. User registration and login through e-mail and through Google OAuth2 Authentication
