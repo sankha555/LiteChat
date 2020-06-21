@@ -5,7 +5,7 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script defer src="https://litechat-im.herokuapp.com:3000/socket.io/socket.io.js"></script>
     <script defer src="../js/script.js"></script>
 
     <title>Chat with {{ recipient.name }}</title>
@@ -18,19 +18,19 @@
             chatbox.scrollTop = chatbox.scrollHeight
 
             $('#btn-input').keypress((e)=>{
-                const socket = io('http://localhost:3000')
+                const socket = io('https://litechat-im.herokuapp.com:3000')
                 socket.emit('typing', {'true':true})
             })
         
         });
 
         $(window).focus(function () {
-            const socket = io('http://localhost:3000')
+            const socket = io('https://litechat-im.herokuapp.com:3000')
             socket.emit('in-tab', {'room': document.getElementById('chat_id').innerText })
         });
 
         $(window).blur(function () {
-            const socket = io('http://localhost:3000')
+            const socket = io('https://litechat-im.herokuapp.com:3000')
             socket.emit('out-of-tab', {'room': document.getElementById('chat_id').innerText})
         });
 

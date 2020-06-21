@@ -25,7 +25,7 @@ const path = require('path')
 const Message = require('./models/message')
 
 // Database connection
-mongoose.connect('mongodb://localhost:27017/chatdb', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect('mongodb://litechat-im.herokuapp.com:27017/chatdb', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
 // App properties
 app.use(flash())
@@ -143,6 +143,6 @@ io.on('connection', socket => {
     })
 })
 
-app.listen(5000)
+app.listen(process.env.PORT || 5000)
 
 module.exports = { app, io }

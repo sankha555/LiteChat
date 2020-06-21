@@ -45,7 +45,7 @@ module.exports = function (passport) {
     passport.use(new GoogleStrategy({
         clientID: '714747507436-cr4tslvs24jrhe0knfk2jmo2suvmcv8i.apps.googleusercontent.com',
         clientSecret: 'C-8rq2xR6QO_drOn4WFUsLDe',
-        callbackURL: "http://localhost:5000/auth/google/callback",
+        callbackURL: "https://litechat-im.herokuapp.com/auth/google/callback",
         passReqToCallback: true
     },
         function (request, accessToken, refreshToken, profile, done) {
