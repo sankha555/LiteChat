@@ -3,8 +3,8 @@ An Instant Messenger for Web Applications - for those who spend more time on the
 
 The web-app has been made using the following technologies:
   - <b>Backend</b> : Node.JS and Express
-  - Frontend : HTML, CSS, JavaScript and JQuery
-  - Database : MongoDB
+  - <b>Frontend</b> : HTML, CSS, JavaScript and JQuery
+  - <b>Database</b> : MongoDB
   
 The application includes the following features :
   1. User registration and login through e-mail and through Google OAuth2 Authentication
@@ -20,8 +20,9 @@ The application includes the following features :
   - Typing status whenever the other user is typing in the message box
   - UI/UX improvisation
   - Ability to send images and files in a data-optimized method
-  
-  *** I would love Constructive Feedback, Possible bugs and Suggested Improvements on this application. Feel free to create an issue in the issues section for the same! ****
+ 
+
+I would love Constructive Feedback, Possible bugs and Suggested Improvements on this application. Feel free to create an issue in the issues section for the same! 
   
   
  -- Sankha Das
