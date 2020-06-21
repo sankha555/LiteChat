@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog App</title>
+
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../public/static/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .container {
+            margin-top: 10px;
+        }
+
+        .bg {
+            background-color: rgb(5, 5, 53);
+            overflow: scroll;
+        }
+
+        .navbar {
+            padding-left: 170px;
+            padding-right: 200px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            margin-top: 0;
+            z-index: 1;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background-color: black;
+            height: 70px;
+            color: white;
+            width: 100%;
+        }
+
+        .article-form {
+            border: 2px solid;
+            border-color: white;
+            border-radius: 4px;
+            padding-left: 15px;
+            padding-top: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+
+            font-size: large;
+        }
+
+        .form-control {
+            border-radius: 4px;
+        }
+
+        .form-label {
+            color: white;
+            font-size: x-large;
+            font-weight: 500;
+        }
+
+        .btn {
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: medium;
+        }
+    </style>
+
+    <script>
+        function writeUsername(){
+            var username = document.getElementById('username');
+            var email = document.getElementById('email');
+            username.value = email.value;
+        };
+    </script>
+    
+</head>
+
+
+<body class="bg">
+
+    <!--Main Content Of The Page-->
+    <main class="container">
+        <br>
+        <h3 class="mb-4" style="color: aliceblue; font-weight: 600; font-size: xx-large;"><strong>Sign Up for LiteChat</strong></h3>
+
+        <form action="/users/register" method="POST" class="article-form">
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <label class = "form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required oninput="writeUsername()">
+            </div>
+            <div class="form-group">
+                <label class = "form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-outline-success mr-2" style="display: inline;">Sign Up</button>&nbsp
+            <a href="/" class="btn btn-outline-danger mr-2">Cancel</a>
+        </form>
+
+        <h6 style="margin-top: 10px; color: aliceblue; font-size: medium; font-weight: 500;">Already have an Account?<a href="login" style="color: greenyellow;"> Login Here</a></h6>
+
+        <center>
+            <h5 style="color: white; font-weight: 600;"> OR </h5><br>
+            <h5>
+                <a href="/auth/google/callback"><img src="../googlesignin.png" width="400px" height="60px"
+                        style="border-radius: 5px;"></a>
+            </h5>
+        </center>
+    </main>
+
+    <!--Main Ends-->
+
+    <!--Footer-->
+    <footer id="footer" class="footer">
+        <div class="container d-md-flex py-4" style="margin-top: 0;">
+
+            <div class="mr-md-auto text-center text-md-left">
+                <div class="copyright">
+                    Developed by <strong><span>Sankha Das</span></strong>. Made using Node.js
+                </div>
+            </div>
+            <div class="ml-4">
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

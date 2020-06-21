@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog App</title>
+
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../public/static/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+    
+        .bg {
+            background-image: url();
+            height: 100%;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    
+        .navbar {
+            padding-left: 170px;
+            padding-right: 200px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            margin-top: 0;
+            z-index: 1;
+        }
+    
+        .footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            background-color: black;
+            height: 70px;
+            color: white;
+            width: 100%;
+        }
+    
+        .article-form {
+            border: 1px solid;
+            border-color: gray;
+            border-radius: 4px;
+            padding-left: 15px;
+            padding-top: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+    
+            font-size: large;
+        }
+    
+        .form-control {
+            border-radius: 4px;
+        }
+    
+        .btn {
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: medium;
+        }
+    </style>
+</head>
+
+
+<body class="bg">
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: black;">
+        <a class="navbar-brand" href="/" style="color: white; font-weight: 600;">Blogo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if user %}  
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/chats/new" style="color: white;">New Chat <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/logout" style="color: white;">Hi, {{ user.name.split(' ')[0] }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/logout" style="color: white;">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/login" style="color: white;">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+
+    <!--Main Content Of The Page-->
+    <main class="container">
+    
+        <br>
+        <div class="card-title">
+            <h3 class="mb-4"><strong><u>All Chats</u></strong></h3>
+        </div>
+
+        {% for chat in chats %}
+            <div class="card border-secondary mt-4" style="border-radius: 5px;">
+                <div class="card-body">
+                    <a href="/chats/{{ chat.id }}">
+                        <h4 class="card-title"><strong>{{ chat.user1_id}} - {{ chat.user2_id }}</strong></h4>
+                    </a>                   
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+    <!--Main Ends-->
+
+    <!--Footer-->
+    <footer id="footer" class="footer">
+        <div class="container d-md-flex py-4">
+
+            <div class="mr-md-auto text-center text-md-left">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>Sankha Das</span></strong>. Made using Node.js
+                </div>
+            </div>
+            <div class="ml-4">
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,415 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script defer src="../js/script.js"></script>
+
+    <title>Chat with {{ recipient.name }}</title>
+
+    <script>
+        //const socket = io('http://localhost:3000')
+        $(document).ready(function () {
+
+            var chatbox = document.getElementById('chatbox')
+            chatbox.scrollTop = chatbox.scrollHeight
+
+            $('#btn-input').keypress((e)=>{
+                const socket = io('http://localhost:3000')
+                socket.emit('typing', {'true':true})
+            })
+        
+        });
+
+        $(window).focus(function () {
+            const socket = io('http://localhost:3000')
+            socket.emit('in-tab', {'room': document.getElementById('chat_id').innerText })
+        });
+
+        $(window).blur(function () {
+            const socket = io('http://localhost:3000')
+            socket.emit('out-of-tab', {'room': document.getElementById('chat_id').innerText})
+        });
+
+    </script>
+
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background-color: black;
+            color: white;
+            height: 70px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        body{
+            position: fixed;
+            height:400px;
+        }
+        .col-md-2, .col-md-10{
+            padding:0;
+        }
+        .panel{
+            position: fixed;
+            width: 700px;
+            margin-bottom: 20px;
+            min-height: 500px;
+            max-height: 100%;
+            height: 500px;
+        }
+        .chat-window{
+            width: 700px;
+            top: 20px;
+            min-height: 500px;
+            height: 500px;
+            max-height: 100%;
+            position: relative;;
+            margin-left:80px;
+            padding-top: 40px;
+            border-color: #e5e5e5;
+        }
+        .chat-window > div > .panel{
+            border-radius: 20px 20px 0 0;
+            width: 700px;
+            min-height: 500px;
+            height: 500px;
+            max-height: 100%;
+        }
+        .icon_minim{
+            padding:2px 10px;
+        }
+        .msg_container_base{
+            background: #e5e5e5;
+            margin: 0;
+            padding: 0 10px 10px;
+            max-height:300px;
+            min-height: 500px;
+            height: 500px;
+            max-height: 100%;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+        .top-bar {
+            background: black;
+            color: white;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            padding-left: 5px;
+            position: relative;
+            overflow: hidden;
+            height: 60px;
+        }
+        .msg_receive{
+            padding-left:0;
+            left: 0;
+            min-width: 200px;
+            max-width: 400px;
+            width: 400px;
+        }
+        .msg_sent{
+            padding-bottom:20px !important;
+            left: 0;
+            margin-left: 150px;
+            margin-right: 10px;
+            min-width: 190px;
+            max-width: 100%;
+        }
+        .messages {
+            background: white;
+            padding: 10px;
+            border-radius: 2px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            bottom: 0;
+            top: 0;
+        }
+        .messages > p {
+            font-size: 13px;
+            margin: 0 0 0.2rem 0;
+        }
+        .messages > time {
+            font-size: 11px;
+            color: #ccc;
+        }
+        .msg_container {
+            padding: 10px;
+            overflow: hidden;
+            display: flex;
+        }
+        img {
+            display: inline;
+            margin-left: 5px;
+            border-radius: 40px;
+        }
+        .avatar {
+            position: relative;
+        }
+        .base_receive > .avatar:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 100px;
+            right: 0;
+            width: 0;
+            height: 0;
+            border: 5px solid #FFF;
+            border-left-color: rgba(0, 0, 0, 0);
+            border-bottom-color: rgba(0, 0, 0, 0);     
+        }
+
+        .base_sent {
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        .base_sent > .avatar:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border: 5px solid white;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            box-shadow: 1px 1px 2px rgba(black, 0.2); 
+        }
+
+        .msg_sent > time{
+            float: right;
+        }
+
+        .msg_container_base::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+            box-shadow: inset;
+        }
+
+        .msg_container_base::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        .msg_container_base::-webkit-scrollbar-thumb
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: #555;
+            box-shadow: inset;
+        }
+
+        .btn-group.dropup{
+            position:fixed;
+            left:0px;
+            bottom:0;
+        }
+
+    </style>
+
+    <script>
+        function isTyping() {
+            while ($('#btn-input').is(':focus')){
+                socket.emit('is_typing', true)
+            }
+            socket.emit('is_typing', false)
+        }
+    </script>
+
+    <script>
+        $(document).on('click', '.panel-heading span.icon_minim', function (e) {
+                var $this = $(this);
+                if (!$this.hasClass('panel-collapsed')) {
+                    $this.parents('.panel').find('.panel-body').slideUp();
+                    $this.addClass('panel-collapsed');
+                    $this.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+                } else {
+                    $this.parents('.panel').find('.panel-body').slideDown();
+                    $this.removeClass('panel-collapsed');
+                    $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+                }
+            });
+            $(document).on('focus', '.panel-footer input.chat_input', function (e) {
+                var $this = $(this);
+                if ($('#minim_chat_window').hasClass('panel-collapsed')) {
+                    $this.parents('.panel').find('.panel-body').slideDown();
+                    $('#minim_chat_window').removeClass('panel-collapsed');
+                    $('#minim_chat_window').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+                }
+            });
+            $(document).on('click', '#new_chat', function (e) {
+                var size = $(".chat-window:last-child").css("margin-left");
+                size_total = parseInt(size) + 400;
+                alert(size_total);
+                var clone = $("#chat_window_1").clone().appendTo(".container");
+                clone.css("margin-left", size_total);
+            });
+            $(document).on('click', '.icon_close', function (e) {
+                //$(this).parent().parent().parent().parent().remove();
+                $("#chat_window_1").remove();
+            });
+
+    </script>
+</head>
+
+<body style="background-color: rgb(65, 60, 60);">
+        <!--<div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">-->
+            
+            <table style="margin-left: 250px;">
+                <tr>
+                    <td >  
+                        <div class="col-xs-12 col-md-12">        
+                            <div class="panel panel-default">
+                                
+                                <a href="/" style="text-decoration: none;"><div class="panel-heading top-bar" style="font-weight: 600; font-size: xx-large; width: 230px;"> <img src="../logo.png" width="50px" height="50px">&nbspLiteChat</div></a>
+                                <div class="panel-body msg_container_base" id="chat-menu" style="height: 650px; background-color: gray; width: 230px;">
+                                    <div>
+                                        <a href="/chats/new" style="text-decoration: none;">
+                                            <button class="btn btn-outline" style="display: inline;  color: white; font-weight: 600; color: white; font-weight: 600;">New Chat</button>
+                                        </a>
+                                        &nbsp
+                                        <a href="/users/logout" style="text-decoration: none;">
+                                            <button class="btn btn-outline" style="display: inline;  color: white; font-weight: 600; color: white; font-weight: 600;">Sign Out</button>
+                                        </a>
+                                    </div>
+                                    
+                                    {% for c in chats %}
+                                        {% if c.user1_email == sender.email && c.user2_email == sender.email %}
+                                        {% elif c.user1_email == sender.email %}
+                                            {% if c.id == chat.id %}
+                                                <br>
+                                                <a href="/chats/{{ c.id }}" style="color: black; text-decoration: none;">
+                                                    <div class="messages" style="background-color: #e5e5e5; width: 210px;">
+                                                        <p><b>{{ c.user2_email }}</b></p>
+                                                
+                                                    </div>
+                                                </a>
+                                            {% else %}
+                                                <br>
+                                                <a href="/chats/{{ c.id }}" style="color: black; text-decoration: none;">
+                                                    <div class="messages" style="background-color: yellow; width: 200px;">
+                                                        <p><b>{{ c.user2_email }}</b></p>
+                                                        
+                                                    </div>
+                                                </a>
+                                            {% endif %}
+                                        {% elif c.user2_email == sender.email %}
+                                            {% if c.id == chat.id %}
+                                                <br>
+                                                <a href="/chats/{{ c.id }}" style="color: black; text-decoration: none;">
+                                                    <div class="messages" style="background-color: #e5e5e5; width: 210px;">
+                                                        <p><b>{{ c.user1_email }}</b></p>
+                                                
+                                                    </div>
+                                                </a>
+                                            {% else %}
+                                                <br>
+                                                <a href="/chats/{{ c.id }}" style="color: black; text-decoration: none;">
+                                                    <div class="messages" style="background-color: yellow; width: 200px;">
+                                                        <p><b>{{ c.user1_email }}</b></p>
+                                                        
+                                                    </div>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                        
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                    
+                            <div class="panel panel-default" style="margin-left: 220px;">
+                                <div class="panel-heading top-bar">
+                                    <div class="col-md-8 col-xs-8">
+                                        <h3 id="recipient" class="panel-title" style="margin-top: 3px; font-weight: 600;"><span class="glyphicon glyphicon-comment"></span>{{ recipient_name }}</h3>
+                                        <h6 id="chat_id" class="panel-title" style="display: none;">{{ chat.id }}</h3>
+                                        <h6 id="status" class="panel-title" style="color: lightgreen;"></h3>
+                                        <h3 id="sender_email" class="panel-title" style="display: none;">{{ sender.email }}</h3>
+                                        <h3 id="recipient_email" class="panel-title" style="display: none;">{{ recipient.email }}</h3>
+
+                                    </div>
+                                    <div class="col-md-4 col-xs-4" style="text-align: right;">
+                                        <a href="#"><span id="minim_chat_window"
+                                                class="glyphicon glyphicon-minus icon_minim"></span></a>
+                                        <a href="#"><span class="glyphicon glyphicon-remove icon_close"
+                                                data-id="chat_window_1"></span></a>
+                                    </div>
+                                </div>
+            
+                                <!--==== MESSAGES APPEAR HERE ====-->                
+                                <div class="panel-body msg_container_base" id="chatbox">
+                                    <div style="height: 370px;"></div>
+                                    {% for message in messages %}
+                                        {% if message.sender_id == sender._id %}
+                                            <div class="row msg_container base_sent">
+                                                <div class="col-xs-10 col-md-10">
+                                                    {% if message.seen %}
+                                                        <div class="messages msg_sent" style="background-color: lightgreen;">
+                                                            <p>{{ message.content }}</p>
+                                                            <i style="display: inline;">{{ moment(message.timestamp).format('DD MMM YY - hh:mm a') }}</i>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="messages msg_sent" style="background-color: lightblue;">
+                                                            <p>{{ message.content }}</p>
+                                                            <i style="display: inline;">{{ moment(message.timestamp).format('DD MMM YY - hh:mm a') }}</i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% elif message.sender_id == recipient._id %}
+                                            <div class="row msg_container base_receive">
+                                                <div class="col-md-2 col-xs-2 avatar">
+                                                    <img src="{{ recipient.image }}" class="img-responsive" style="width: 80px; height: 80px; border-radius: 40px;">
+                                                </div>
+                                                <div class="messages msg_receive" style="margin-left: 0;">
+                                                    <div class="col-xs-10 col-md-10">
+                                                        <p>{{ message.content }}</p>
+                                                        <i>{{ moment(message.timestamp).format('DD MMM YY - hh:mm a') }}</i>                         
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+            
+                                <!--==== MESSAGE INPUT ====-->
+                                <form class="panel-footer" id="send-form" style="margin-top: 5px;">
+                                        <input id="btn-input" type="text" class="form-control"
+                                            placeholder="Write your message here..." style="width: 645px; height: 40px; display: inline;" onforminput="isTyping()">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" id="btn-chat" style="height: 40px; background-color: black; border-color: black;">
+                                                <i class="fa fa-send-o" style="font-size:24px;color:white"></i>
+                                            </button>
+                                        </span> 
+                                </form>
+            
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        <!--Footer-->
+        <footer id="footer" class="footer">
+            <div class="container d-md-flex py-4 mt-0">
+        
+                <div class="mr-md-auto text-center text-md-left mt-0">
+                    <div class="copyright">
+                        Developed by <strong><span>Sankha Das</span></strong>. Made using Node.js
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                </div>
+            </div>
+        </footer>
+        <!--</div>-->
+
+</body>
+</html>

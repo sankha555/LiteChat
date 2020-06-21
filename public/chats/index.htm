@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog App</title>
+
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../public/static/style.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+
+        .navbar-brand {
+            font-weight: 500;
+            font-size: 50px;
+            color: aliceblue;
+            text-decoration-color: aliceblue;
+        }
+
+        .nav-link {
+            font-size: large;
+            font-weight: 600;
+            color: aliceblue;
+            margin-top: 5px;
+        }
+
+        .hero-wrapper {
+            margin-top: 90px;
+            text-align: left;
+            vertical-align: middle;
+            line-height: normal;
+            font-size: 100px;
+            font-weight: 600;
+            color: beige;
+            animation: flow cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s;
+        }
+    
+
+        .container {
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .navbar {
+            padding-left: 150px;
+            padding-right: 200px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            margin-top: 0;
+            z-index: 1;
+        }
+
+        .bg-light{
+            background-color: rgb(113, 27, 27);
+            background: rgb(113, 27, 27);
+        }
+
+        .bg {
+            background-image: url(https://cdn.shopify.com/s/files/1/0081/1222/files/urban-commuter-palander-Nov19-93_WEB_copy_1200x.progressive.jpg?v=1582051911);
+            height: 645px;
+            width: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background-color: black;
+            color: white;
+            height: 70px;
+            width: 100%;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg">
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="/" style="color: aliceblue;"><strong>LiteChat</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: white;">Hi, {{ user.name.split(' ')[0] }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chats/new" style="color: white;">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/logout" style="color: white;">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/register" style="color: white;">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/login" style="color: white;">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="container">
+        <br>
+        <div class="hero-wrapper" data-aos="fade-in" data-aos-delay="200">
+            Chat<br> on the <br> Go
+        </div>
+    </main>
+    
+    <!--Footer-->
+    <footer id="footer" class="footer">
+        <div class="container d-md-flex py-4 mt-0">
+    
+            <div class="mr-md-auto text-center text-md-left mt-0">
+                <div class="copyright">
+                    Developed by <strong><span>Sankha Das</span></strong>. Made using Node.js
+                </div>
+            </div>
+            <div class="ml-4">
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
