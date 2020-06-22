@@ -78,9 +78,9 @@ function appendMessage(message, image, received) {
         let message_text = document.createElement('div')
         message_text.setAttribute("class", "messages msg_receive")
         let msg_content = document.createElement('p')
-        let msg_time = document.createElement('p')
+        let msg_time = document.createElement('i')
 
-        msg_time.inputHTML = '<i>' + message.timestamp + '</i>'
+        msg_time.inputText = message.timestamp
         msg_content.innerText = message.content
         message_text.appendChild(msg_content)
         message_text.appendChild(msg_time)
