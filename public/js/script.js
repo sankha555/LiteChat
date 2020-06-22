@@ -8,6 +8,7 @@ var status_holder = document.getElementById('statuses')
 const sender_email = document.getElementById('sender_email').innerText
 const recipient_email = document.getElementById('recipient_email').innerText
 
+
 console.log('here at 11')
 
 socket.emit('user-connected', {'room': document.getElementById('chat_id').innerText})
@@ -15,9 +16,15 @@ socket.emit('user-connected', {'room': document.getElementById('chat_id').innerT
 socket.on('recipient-is-in', () => {
     console.log('recipient in')
     var status = document.getElementById('status')
-    if (status.innerHTML == "")
+    var hidden_status = document.getElementById('hidden_status')
+    
+    if (status.innerHTML == "" || hidden_status.innerHTML == ""){
+        hidden_status.innerHTML = "Active"
         status.innerHTML = "Active"
+    }
+
     status_holder.appendChild(status)
+    status_holder.appendChild(hidden_status)
     var x = document.getElementsByClassName('messages msg_sent')
     for(var i = 0; i < x.length; i++){
         x[i].setAttribute("style", "background-color: lightgreen;")
@@ -27,8 +34,13 @@ socket.on('recipient-is-in', () => {
 socket.on('recipient-out', () => {
     console.log('recipient in')
     var status = document.getElementById('status')
+    var hidden_status = document.getElementById('hidden_status')
     status.innerHTML = ""
+    hidden_status.innerHTML = ""
+
     status_holder.append(status)
+    status_holder.append(hidden_status)
+
 })
 
 socket.on('is-typing', (data) => {
@@ -39,7 +51,11 @@ socket.on('is-typing', (data) => {
         status_holder.append(status)
     } else {
         var status = document.getElementById('status')
-        status.innerHTML = ""
+        var hidden_status = document.getElementById('hidden_status')
+        if (hidden_status.innerHTML == "Active")
+            status.innerHTML = "Active"
+        else 
+            status.innerHTML = ""
         status_holder.append(status)
     }
 
@@ -63,7 +79,7 @@ messageForm.addEventListener('submit', e => {
         image: null,
         timestamp: new Date(),
     }
-    data.seen = ((document.getElementById('status').innerHTML === "Active") ? true : false)
+    data.seen = ((document.getElementById('hidden_status').innerHTML === "Active") || (document.getElementById('status').innerHTML === "Active") ) ? true : false
     appendMessage(data, null, false)
 })
 
