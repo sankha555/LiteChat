@@ -1,6 +1,10 @@
 # LiteChat
 An Instant Messenger for Web Applications - for those who spend more time on their laptops than their phones!
 
+The application is hosted at : https://litechat-im.herokuapp.com
+
+Sign Up and login to your account through email or Google Sign In. To chat with another user registered on LiteChat, just click on Chat on the landing page and enter the email of the user to start a chat with them. You will be redirected to the chatbox.
+
 The web-app has been made using the following technologies:
   - <b>Backend</b> : Node.JS and Express
   - <b>Frontend</b> : HTML, CSS, JavaScript and JQuery
