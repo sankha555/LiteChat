@@ -61,6 +61,8 @@ messageForm.addEventListener('submit', e => {
 })
 
 function appendMessage(message, image, received) {
+    const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
     if (received) {
         let receive_row = document.createElement('div')
         receive_row.setAttribute("class", "row msg_container base_receive")
@@ -80,7 +82,7 @@ function appendMessage(message, image, received) {
         let msg_content = document.createElement('p')
         let msg_time = document.createElement('i')
 
-        msg_time.inputText = message.timestamp
+        msg_time.innerText = message.timestamp.getDate() + " " + shortMonths[message.timestamp.getMonth()] + " " + ((message.timestamp.getFullYear()) % 100) + " - " + (message.timestamp.getHours()) % 12 + ":" + (message.timestamp.getMinutes() < 10) ? ("0" + message.timestamp.getMinutes()) : (message.timestamp.getMinutes()) + " " + ((message.timestamp.getHours() > 12) ? "pm" : "am")        
         msg_content.innerText = message.content
         message_text.appendChild(msg_content)
         message_text.appendChild(msg_time)
@@ -92,8 +94,6 @@ function appendMessage(message, image, received) {
         chatbox.scrollTop = chatbox.scrollHeight
     } else {
 
-        const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
         let sent_row = document.createElement('div')
         sent_row.setAttribute("class", "row msg_container base_sent")
         let sent_col = document.createElement('div')
@@ -104,7 +104,7 @@ function appendMessage(message, image, received) {
         let msg_content = document.createElement('p')
         let msg_time = document.createElement('i')
 
-        msg_time.innerText = message.timestamp.getDate() + " " + shortMonths[message.timestamp.getMonth()] + " " + (message.timestamp.getFullYear()) % 100 + " - " + (message.timestamp.getHours())%12 + ":" + ((message.timestamp.getMinutes() < 10) ? "0"+message.timestamp.getMinutes() : message.timestamp.getMinutes()) + " " + ((message.timestamp.getHours() > 12) ? "pm" : "am") 
+        msg_time.innerText = message.timestamp.getDate() + " " + shortMonths[message.timestamp.getMonth()] + " " + ((message.timestamp.getFullYear())%100) + " - " + ((message.timestamp.getHours())%12 + ":" + (message.timestamp.getMinutes() < 10) ?  ("0" + message.timestamp.getMinutes()) : (message.timestamp.getMinutes())) + " " + ((message.timestamp.getHours() > 12) ? "pm" : "am") 
         msg_content.innerText = message.content
         message_text.appendChild(msg_content)
         message_text.appendChild(msg_time)

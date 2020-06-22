@@ -128,16 +128,25 @@ io.on('connection', socket => {
     socket.on('send-message', async(data) => {
         let sender = await User.findOne({email: data.sender_email})
         let chat = await Chat.findById(data.room)
+
+        let recipient_email = (chat.user1_email == sender.email) ? chat.user2_email : chat.user1_email
+        let recipient = await User.findOne({ email: recipient_email })
         
         var newMessage = new Message({
             sender_id: sender._id,
             content: data.message
         })
-        if (data.status === "Active") newMessage.seen = true
+        if (recipient.room == data.room) newMessage.seen = true
         newMessage.save()
         chat.messages.push(newMessage)
         chat.save()
-        socket.to(data.room).emit('chat-message', {'message':newMessage, 'alert': (newMessage.seen ? false : true), 'image':sender.image})
+
+        message = {
+            content: newMessage.content,
+            timestamp: newMessage.timestamp,
+            seen: newMessage.seen
+        }
+        socket.to(data.room).emit('chat-message', {'message':message, 'alert': (message.seen ? false : true), 'image':sender.image})
     })
 
     socket.on('disconnect', () => {
