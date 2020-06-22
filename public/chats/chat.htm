@@ -194,7 +194,7 @@
                     console.log('here at 13')
                 var chatbox = document.getElementById('chatbox')
                 chatbox.scrollTop = chatbox.scrollHeight
-
+            
                 $('#btn-input').keypress((e) => {
                     //const socket = io('https://litechat-im.herokuapp.com:3000')
                     socket.emit('typing', { 'true': true })
