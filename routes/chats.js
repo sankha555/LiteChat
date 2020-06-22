@@ -137,6 +137,19 @@ router.get('/:id', async(req, res) => {
                 data.chat = chat
                 data.chats = chats
 
+                if (chat.user1_email === req.user.email) {
+                    if (user2.room === chat._id)
+                        data.status = "Active"
+                    else 
+                        data.status = ""
+                } else if (chat.user2_email === req.user.email) {
+                    if (user1.room === chat._id)
+                        data.status = "Active"
+                    else
+                        data.status = ""
+                }
+                               
+
                 return res.render('chats/chat', data)
             }
         })
