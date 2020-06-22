@@ -4,7 +4,7 @@ const messageForm = document.getElementById('send-form')
 const messageInput = document.getElementById('btn-input')
 const messageCallout = document.getElementById('message-container')
 const chatbox = document.getElementById('chatbox')
-var status = document.getElementById('status').innerText
+var status = document.getElementById('status')
 const sender_email = document.getElementById('sender_email').innerText
 const recipient_email = document.getElementById('recipient_email').innerText
 
@@ -13,7 +13,8 @@ console.log('here at 11')
 socket.emit('user-connected', {'room': document.getElementById('chat_id').innerText})
 
 socket.on('recipient-is-in', () => {
-    status = "Active"
+    console.log('recipient in')
+    status.innerText = "Active"
     var x = document.getElementsByClassName('messages msg_sent')
     for(var i = 0; i < x.length; i++){
         x[i].setAttribute("style", "background-color: lightgreen;")
@@ -21,13 +22,14 @@ socket.on('recipient-is-in', () => {
 })
 
 socket.on('recipient-out', () => {
-    status = ""
+    console.log('recipient in')
+    status.innerText = ""
 })
 
 socket.on('is-typing', (data) => {
     console.log('here in typing')
     if (data.true)
-        status = "typing..."
+        status.innerText = "typing..."
 })
 
 socket.on('chat-message', data => {
@@ -63,6 +65,7 @@ function appendMessage(message, image, received) {
         let sender_img = document.createElement('img')
         sender_img.setAttribute("class", "img-responsive")
         sender_img.setAttribute("src", image)
+        sender_img.setAttribute("style", "width: 80px; height: 80px; border-radius: 40px;")
 
         sender_img_holder.appendChild(sender_img)
 
@@ -91,7 +94,7 @@ function appendMessage(message, image, received) {
         sent_col.setAttribute("class", "col-xs-10 col-md-10")
         let message_text = document.createElement('div')
         message_text.setAttribute("class", "messages msg_sent")
-        message.seen ? message_text.setAttribute("style", "background-color: lightgreen;") : message_text.setAttribute("style", "background-color: lightblue;")
+        (status.innerText === "Active") ? message_text.setAttribute("style", "background-color: lightgreen;") : message_text.setAttribute("style", "background-color: lightblue;")
         let msg_content = document.createElement('p')
         let msg_time = document.createElement('i')
 
