@@ -4,7 +4,6 @@ const messageForm = document.getElementById('send-form')
 const messageInput = document.getElementById('btn-input')
 const messageCallout = document.getElementById('message-container')
 const chatbox = document.getElementById('chatbox')
-var status = document.getElementById('status')
 var status_holder = document.getElementById('statuses')
 const sender_email = document.getElementById('sender_email').innerText
 const recipient_email = document.getElementById('recipient_email').innerText
@@ -15,6 +14,7 @@ socket.emit('user-connected', {'room': document.getElementById('chat_id').innerT
 
 socket.on('recipient-is-in', () => {
     console.log('recipient in')
+    var status = document.getElementById('status')
     status.innerHTML = "Active"
     status_holder.appendChild(status)
     var x = document.getElementsByClassName('messages msg_sent')
@@ -25,15 +25,17 @@ socket.on('recipient-is-in', () => {
 
 socket.on('recipient-out', () => {
     console.log('recipient in')
+    var status = document.getElementById('status')
     status.innerHTML = ""
-    status_holder.appendChild(status)
+    status_holder.append(status)
 })
 
 socket.on('is-typing', (data) => {
     console.log('here in typing')
     if (data.true){
+        var status = document.getElementById('status')
         status.innerHTML = "typing..."
-        status_holder.appendChild(status)
+        status_holder.append(status)
     }
 
 })
@@ -56,7 +58,7 @@ messageForm.addEventListener('submit', e => {
         image: null,
         timestamp: new Date(),
     }
-    data.seen = ((status.innerHTML === "Active") ? true : false)
+    data.seen = ((document.getElementById('status').innerHTML === "Active") ? true : false)
     appendMessage(data, null, false)
 })
 
@@ -82,7 +84,8 @@ function appendMessage(message, image, received) {
         let msg_content = document.createElement('p')
         let msg_time = document.createElement('i')
 
-        msg_time.innerText = message.timestamp.getDate() + " " + shortMonths[message.timestamp.getMonth()] + " " + ((message.timestamp.getFullYear()) % 100) + " - " + (message.timestamp.getHours()) % 12 + ":" + (message.timestamp.getMinutes() < 10) ? ("0" + message.timestamp.getMinutes()) : (message.timestamp.getMinutes()) + " " + ((message.timestamp.getHours() > 12) ? "pm" : "am")        
+        let timestamp = new Date(message.timestamp)
+        msg_time.innerText = timestamp.getDate() + " " + shortMonths[timestamp.getMonth()] + " " + ((timestamp.getFullYear()) % 100) + " - " + (timestamp.getHours()) % 12 + ":" + (timestamp.getMinutes() < 10) ? ("0" + timestamp.getMinutes()) : (timestamp.getMinutes()) + " " + ((timestamp.getHours() > 12) ? "pm" : "am")        
         msg_content.innerText = message.content
         message_text.appendChild(msg_content)
         message_text.appendChild(msg_time)
