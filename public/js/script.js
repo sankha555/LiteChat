@@ -5,6 +5,7 @@ const messageInput = document.getElementById('btn-input')
 const messageCallout = document.getElementById('message-container')
 const chatbox = document.getElementById('chatbox')
 var status = document.getElementById('status')
+var status_holder = document.getElementById('statuses')
 const sender_email = document.getElementById('sender_email').innerText
 const recipient_email = document.getElementById('recipient_email').innerText
 
@@ -15,6 +16,7 @@ socket.emit('user-connected', {'room': document.getElementById('chat_id').innerT
 socket.on('recipient-is-in', () => {
     console.log('recipient in')
     status.innerHTML = "Active"
+    status_holder.appendChild(status)
     var x = document.getElementsByClassName('messages msg_sent')
     for(var i = 0; i < x.length; i++){
         x[i].setAttribute("style", "background-color: lightgreen;")
@@ -24,12 +26,16 @@ socket.on('recipient-is-in', () => {
 socket.on('recipient-out', () => {
     console.log('recipient in')
     status.innerHTML = ""
+    status_holder.appendChild(status)
 })
 
 socket.on('is-typing', (data) => {
     console.log('here in typing')
-    if (data.true)
+    if (data.true){
         status.innerHTML = "typing..."
+        status_holder.appendChild(status)
+    }
+
 })
 
 socket.on('chat-message', data => {
@@ -94,7 +100,7 @@ function appendMessage(message, image, received) {
         sent_col.setAttribute("class", "col-xs-10 col-md-10")
         let message_text = document.createElement('div')
         message_text.setAttribute("class", "messages msg_sent")
-        (data.seen) ? message_text.setAttribute("style", "background-color: lightgreen;") : message_text.setAttribute("style", "background-color: lightblue;")
+        message.seen ? message_text.setAttribute("style", "background-color: lightgreen;") : message_text.setAttribute("style", "background-color: lightblue;")
         let msg_content = document.createElement('p')
         let msg_time = document.createElement('i')
 
