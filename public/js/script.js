@@ -21,7 +21,7 @@ socket.on('recipient-is-in', () => {
     if (status.innerHTML == "" || hidden_status.innerHTML == ""){
         hidden_status.innerHTML = "Active"
         status.innerHTML = "Active"
-    }
+    } 
 
     status_holder.appendChild(status)
     status_holder.appendChild(hidden_status)

@@ -138,12 +138,12 @@ router.get('/:id', async(req, res) => {
                 data.chats = chats
 
                 if (chat.user1_email === req.user.email) {
-                    if (user2.room === chat._id)
+                    if (user2.room == user1.room)
                         data.status = "Active"
                     else 
                         data.status = ""
                 } else if (chat.user2_email === req.user.email) {
-                    if (user1.room === chat._id)
+                    if (user1.room == user2.room)
                         data.status = "Active"
                     else
                         data.status = ""
