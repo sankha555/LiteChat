@@ -72,14 +72,6 @@
         }
     </style>
 
-    <script>
-        function writeUsername(){
-            var username = document.getElementById('username');
-            var email = document.getElementById('email');
-            username.value = email.value;
-        };
-    </script>
-    
 </head>
 
 
@@ -97,7 +89,7 @@
             </div>
             <div class="form-group">
                 <label class = "form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required oninput="writeUsername()">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required >
             </div>
             <div class="form-group">
                 <label class = "form-label">Password</label>
