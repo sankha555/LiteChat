@@ -109,7 +109,7 @@ io.on('connection', socket => {
     
     socket.on('typing', (data) => {
         if (data.true === true){
-            console.log('here at 109')
+            //console.log('here at 109')
             socket.to(Object.keys(socket.rooms)).emit('is-typing', data)
             //io.emit('is-typing', data)
         }

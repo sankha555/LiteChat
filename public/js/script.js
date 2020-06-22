@@ -9,7 +9,7 @@ const sender_email = document.getElementById('sender_email').innerText
 const recipient_email = document.getElementById('recipient_email').innerText
 
 
-console.log('here at 11')
+//console.log('here at 11')
 
 socket.emit('user-connected', {'room': document.getElementById('chat_id').innerText})
 

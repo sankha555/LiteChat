@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
     let newUser = new User({
         name: name,
         email: email,
-        username: username,
+        //username: username,
         password: password
     })
 
@@ -63,9 +63,9 @@ router.post('/login', (req, res, next) => {
 })
 
 router.get('/logout', function (req, res) {
-    req.logout();
-    req.flash('success', 'You are logged out');
-    res.redirect('/');
+    req.logout()
+    req.flash('success', 'You are logged out')
+    res.redirect('/')
 })
 
 module.exports = router
