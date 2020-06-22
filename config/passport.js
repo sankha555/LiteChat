@@ -5,9 +5,9 @@ const bcryptjs = require('bcryptjs')
 const GoogleStrategy = require('passport-google-oauth2').Strategy
 
 module.exports = function (passport) {
-    passport.use(new LocalStrategy({ usernameField: 'user[email]' }, function (email, password, done) {
+    passport.use(new LocalStrategy(function (username, password, done) {
 
-        let query = { email: email }
+        let query = { email: username }
         User.findOne(query, function (err, user) {
             if (err) {
                 throw err
