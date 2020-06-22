@@ -42,8 +42,6 @@ module.exports = function (passport) {
         })
     })
 
-    //'714747507436-cr4tslvs24jrhe0knfk2jmo2suvmcv8i.apps.googleusercontent.com'
-    //'C-8rq2xR6QO_drOn4WFUsLDe'
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET,
