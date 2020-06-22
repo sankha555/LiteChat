@@ -36,6 +36,10 @@ socket.on('is-typing', (data) => {
         var status = document.getElementById('status')
         status.innerHTML = "typing..."
         status_holder.append(status)
+    } else {
+        var status = document.getElementById('status')
+        status.innerHTML = ""
+        status_holder.append(status)
     }
 
 })
