@@ -15,7 +15,8 @@ socket.emit('user-connected', {'room': document.getElementById('chat_id').innerT
 socket.on('recipient-is-in', () => {
     console.log('recipient in')
     var status = document.getElementById('status')
-    status.innerHTML = "Active"
+    if (status.innerHTML == "")
+        status.innerHTML = "Active"
     status_holder.appendChild(status)
     var x = document.getElementsByClassName('messages msg_sent')
     for(var i = 0; i < x.length; i++){
