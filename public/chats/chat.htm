@@ -11,12 +11,6 @@
 
     <title>Chat with {{ recipient.name }}</title>
 
-    <script>
-        //const socket = io('http://localhost:3000')
-        
-
-    </script>
-
     <style>
         .footer {
             position: fixed;
@@ -193,15 +187,31 @@
     </style>
 
     <script>
-        function isTyping() {
-            while ($('#btn-input').is(':focus')){
-                socket.emit('is_typing', true)
-            }
-            socket.emit('is_typing', false)
-        }
-    </script>
+        
+        //const socket = io('http://localhost:3000')
+        const socket = io()
+        $(document).ready(function () {
+                    console.log('here at 13')
+                var chatbox = document.getElementById('chatbox')
+                chatbox.scrollTop = chatbox.scrollHeight
 
-    <script>
+                $('#btn-input').keypress((e) => {
+                    //const socket = io('https://litechat-im.herokuapp.com:3000')
+                    socket.emit('typing', { 'true': true })
+                })
+
+        })
+
+        $(window).focus(function () {
+                    //const socket = io('https://litechat-im.herokuapp.com:3000')
+                    socket.emit('in-tab', { 'room': document.getElementById('chat_id').innerText })
+                })
+
+        $(window).blur(function () {
+                    //const socket = io('https://litechat-im.herokuapp.com:3000')
+                    socket.emit('out-of-tab', { 'room': document.getElementById('chat_id').innerText })
+                })
+
         $(document).on('click', '.panel-heading span.icon_minim', function (e) {
                 var $this = $(this);
                 if (!$this.hasClass('panel-collapsed')) {
@@ -297,7 +307,6 @@
                                                 </a>
                                             {% endif %}
                                         {% endif %}
-                                        
                                     {% endfor %}
                                 </div>
                             </div>

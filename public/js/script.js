@@ -12,28 +12,6 @@ console.log('here at 11')
 
 socket.emit('user-connected', {'room': document.getElementById('chat_id').innerText})
 
-$(document).ready(function () {
-    console.log('here at 13')
-    var chatbox = document.getElementById('chatbox')
-    chatbox.scrollTop = chatbox.scrollHeight
-
-    $('#btn-input').keypress((e) => {
-        //const socket = io('https://litechat-im.herokuapp.com:3000')
-        socket.emit('typing', { 'true': true })
-    })
-
-})
-
-$(window).focus(function () {
-    //const socket = io('https://litechat-im.herokuapp.com:3000')
-    socket.emit('in-tab', { 'room': document.getElementById('chat_id').innerText })
-})
-
-$(window).blur(function () {
-    //const socket = io('https://litechat-im.herokuapp.com:3000')
-    socket.emit('out-of-tab', { 'room': document.getElementById('chat_id').innerText })
-})
-
 socket.on('recipient-is-in', () => {
     status = "Active"
     var x = document.getElementsByClassName('messages msg_sent')
@@ -53,7 +31,7 @@ socket.on('is-typing', (data) => {
 })
 
 socket.on('chat-message', data => {
-    appendMessage(data.message, true)
+    appendMessage(data, true)
     if (data.alert) {
         // in next verion :)
     }
@@ -67,6 +45,7 @@ messageForm.addEventListener('submit', e => {
 
     data = {
         content: message,
+        image: null,
         timestamp: new Date(),
     }
     data.seen = ((status === "Active") ? true : false)
@@ -79,19 +58,29 @@ function appendMessage(message, received) {
         receive_row.setAttribute("class", "row msg_container base_receive")
         const receive_col = document.createElement('div')
         receive_col.setAttribute("class", "col-xs-10 col-md-10")
+        const sender_img_holder = document.createElement('div')
+        sender_img_holder.setAttribute("class", "col-md-2 col-xs-2 avatar")
+        const sender_img = document.createElement('img')
+        sender_img.setAttribute("class", "img-responsive")
+        sender_img.setAttribute("src", data.image)
+
+        sender_img_holder.appendChild(sender_img)
+
         const message_text = document.createElement('div')
         message_text.setAttribute("class", "messages msg_receive")
         const msg_content = document.createElement('p')
         const msg_time = document.createElement('p')
 
-        msg_time.inputHTML = '<i>' + message.timestamp + '</i>'
-        msg_content.innerText = message.content
+        msg_time.inputHTML = '<i>' + data.message.timestamp + '</i>'
+        msg_content.innerText = data.message.content
         message_text.appendChild(msg_content)
         message_text.appendChild(msg_time)
         receive_col.appendChild(message_text)
+        receive_row.appendChild(sender_img_holder)
         receive_row.appendChild(receive_col)
 
         chatbox.appendChild(receive_row)
+        chatbox.scrollTop = chatbox.scrollHeight
     } else {
 
         const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

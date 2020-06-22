@@ -137,7 +137,7 @@ io.on('connection', socket => {
         newMessage.save()
         chat.messages.push(newMessage)
         chat.save()
-        socket.to(data.room).emit('chat-message', {'message':newMessage, 'alert': (newMessage.seen ? false : true)})
+        socket.to(data.room).emit('chat-message', {'message':newMessage, 'alert': (newMessage.seen ? false : true), 'image':sender.image})
     })
 
     socket.on('disconnect', () => {
