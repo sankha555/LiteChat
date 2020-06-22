@@ -85,7 +85,7 @@ function appendMessage(message, image, received) {
         let msg_time = document.createElement('i')
 
         let timestamp = new Date(message.timestamp)
-        msg_time.innerText = timestamp.getDate() + " " + shortMonths[timestamp.getMonth()] + " " + ((timestamp.getFullYear()) % 100) + " - " + (timestamp.getHours() % 12) + ":" + (timestamp.getMinutes() < 10) ? ("0" + timestamp.getMinutes()) : (timestamp.getMinutes()) + " " + ((timestamp.getHours() > 12) ? "pm" : "am")        
+        msg_time.innerText = timestamp.getDate() + " " + shortMonths[timestamp.getMonth()] + " " + ((timestamp.getFullYear()) % 100) + " - " + ((timestamp.getHours()) % 12) + ":" + ((timestamp.getMinutes() < 10) ? ("0" + timestamp.getMinutes()) : (timestamp.getMinutes())) + " " + ((timestamp.getHours() > 12) ? "pm" : "am") 
         msg_content.innerText = message.content
         message_text.appendChild(msg_content)
         message_text.appendChild(msg_time)
