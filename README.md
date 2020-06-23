@@ -1,5 +1,5 @@
 # LiteChat
-An Instant Messenger for Web Applications - for those who spend more time on their laptops than their phones!
+An Instant Messenger for Web Applications built on Node.js - for those who spend more time on their laptops than their phones!
 
 The application is hosted at : https://litechat-im.herokuapp.com
 
